@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+option go_package="./;userpb";
+package userpb;
+
+message User{
+  string Name = 1;
+  string Password = 2;
+  repeated string Follows = 3;
+  bool LoginStatus = 4;
+}
+
+message UserListFields{
+  string Name = 1;
+  string UserType = 2;
+}
+
+message UserList{
+  repeated UserListFields List = 1;
+}
+
+message Login{
+  repeated User Users = 1;
+}
+
+message AddUserParameters{
+  string Name = 1;
+  string Password = 2;
+}
+
+message LoginDetails{
+  string Name = 1;
+  string Password = 2;
+}
+
+// follwer follow following
+message FollowerParameters{
+  string Follower = 1;
+  string Following = 2;
+}
+
+message Status{
+  User User = 1;
+  bool ResponseStatus = 2;
+}
+
+message UserName{
+  string Name = 1;
+}
+
+service UserService{
+  rpc Add(AddUserParameters) returns (User) {};
+  rpc GetUserByNamePasswrod(LoginDetails) returns (User) {};
+  rpc FollowUser(FollowerParameters) returns (Status) {};
+  rpc GetUserFollowingByName(UserName) returns (Login) {};
+}

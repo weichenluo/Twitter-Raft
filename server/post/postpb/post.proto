@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option go_package="./;postpb";
+package postpb;
+
+message Post{
+  string User = 1;
+  string Title = 2;
+  string Body = 3;
+  string Time = 4;
+}
+
+message UserPosts {
+  repeated Post Posts = 1;
+}
+
+message PostText {
+  string User = 1;
+  string Title = 2;
+  string Body = 3;
+}
+
+
+message Users {
+  repeated int32 Ids = 1;
+}
+
+message NoArgs {
+}
+
+service PostService {
+  rpc AddPost(PostText) returns (Post) {};
+  rpc GetFollowerPosts(Users) returns (UserPosts) {};
+  rpc GetAllPosts(NoArgs) returns (UserPosts) {};
+}
