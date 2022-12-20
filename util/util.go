@@ -90,15 +90,12 @@ func Raftstorage(method string, key string, value interface{}) (string, error) {
 		url := "http://127.0.0.1:" + port + "/" + key
 
 		go RaftInit(ctxt, method, url, payload, rChan)
-		if rChan != nil {
-			break
-		}
 	}
 
 	var response *http.Response
 	select {
 	case res := <-rChan:
-		// log.Println("response from channel is ", res)
+		log.Println("response from channel is ", res)
 		response = res
 		cancel()
 	case <-time.After(10 * time.Second):
